@@ -45,7 +45,7 @@ export default function Auth() {
   return (
     <div className="bg-white flex justify-center items-center h-screen">
       <div className="w-1/2 h-screen hidden lg:block">
-        <img src="../public/assets/bg-img.png" alt="Background" className="object-cover w-full h-full"/>
+        <img src="/assets/bg-img.png" alt="Background" className="object-cover w-full h-full"/>
       </div>
       <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
         <div className="bg-white p-8 rounded-lg w-full max-w-md mt-12">
