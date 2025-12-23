@@ -1,21 +1,21 @@
 import { Heart, Image, Users, Star } from "lucide-react";
-import Navigation from "../components/Navigation";
-import type { User } from "@supabase/supabase-js";
-import { useState, useEffect } from "react";
-import { supabase } from "../supabase/supabase";
+// Removed unused imports
+// import { useEffect } from "react";
+// import { supabase } from "../supabase/supabase";
 
 export default function AboutPage() {
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null); // Not used in this component
 
-  useEffect(() => {
-    // Get current user
-    const getCurrentUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    
-    getCurrentUser();
-  }, []);
+  // Removed useEffect that used setUser since setUser doesn't exist in this component
+  // useEffect(() => {
+  //   // Get current user
+  //   const getCurrentUser = async () => {
+  //     const { data: { user } } = await supabase.auth.getUser();
+  //     setUser(user);
+  //   };
+  //   
+  //   getCurrentUser();
+  // }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-zinc-50">

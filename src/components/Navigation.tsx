@@ -55,11 +55,27 @@ export default function Navigation({ user }: LayoutProps) {
   
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.name === "file" && e.target.files?.[0]) {
+      const file = e.target.files[0];
+      
+      // Client-side validation
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      
+      if (!validTypes.includes(file.type)) {
+        alert('Invalid file type. Please upload a JPEG, PNG, WebP, or GIF image.');
+        return;
+      }
+      
+      if (file.size > maxSize) {
+        alert('File size too large. Please upload an image smaller than 5MB.');
+        return;
+      }
+      
       dispatch({
         type: "UPDATE_INPUTS",
         payload: {
-          file: e.target.files[0],
-          path: URL.createObjectURL(e.target.files[0]),
+          file: file,
+          path: URL.createObjectURL(file),
         },
       });
     } else {

@@ -42,6 +42,7 @@ export default function ImageUploadForm({
           <input
             type="file"
             name="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
             className="bg-transparent
             border border-sky-500
             px-4 py-2
@@ -63,6 +64,8 @@ export default function ImageUploadForm({
             file:cursor-pointer
             file:hover:bg-sky-600"
             onChange={handleChange}
+            // Limit file size to 5MB (5 * 1024 * 1024 bytes)
+            // Server-side validation is also needed
           />
           <button
             type="submit"

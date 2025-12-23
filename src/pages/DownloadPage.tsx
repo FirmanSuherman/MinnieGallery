@@ -2,26 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGallery } from "../context/GalleryContext";
 import type { ExtendedGalleryItem } from "../types";
-import Navigation from "../components/Navigation";
 import { Heart, MessageCircle, Download } from "lucide-react";
-import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase/supabase";
 
 export default function DownloadPage() {
   const { imageId } = useParams<{ imageId: string }>();
-  const { filteredItems, toggleLike, addComment } = useGallery();
+  const { filteredItems, toggleLike } = useGallery();
+  // const { filteredItems, toggleLike, addComment } = useGallery(); // addComment not used in this component
   const [selectedImage, setSelectedImage] = useState<ExtendedGalleryItem | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null); // Not used in this component
 
   useEffect(() => {
-    // Get current user
-    const getCurrentUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    
-    getCurrentUser();
-    
     // Find the specific image based on the URL parameter
     if (imageId) {
       const image = filteredItems.find(item => item.id === Number(imageId));

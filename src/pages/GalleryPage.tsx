@@ -1,17 +1,14 @@
-import { useMemo, useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import ImageUploadForm from "../components/ImageUploadForm";
-import { Plus, Trash2, X, Home, User } from "lucide-react";
+import { Plus, Trash2, X } from "lucide-react";
 import { useGallery } from "../context/GalleryContext";
 import { useRef, useState } from "react";
 import { CommentBox } from "../components/LikeButton";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase/supabase";
 
 import type { ExtendedGalleryItem } from "../types";
 
 export default function GalleryPage() {
-  const navigate = useNavigate();
-
   const [activePhoto, setActivePhoto] = useState<ExtendedGalleryItem | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
@@ -26,7 +23,7 @@ export default function GalleryPage() {
     getCurrentUser();
   }, []);
   
-  const { state, dispatch, uploadImage, deleteImage, filteredItems, toggleLike, addComment, fetchUserImages } =
+  const { state, dispatch, uploadImage, deleteImage, filteredItems, addComment, fetchUserImages } = // Removed unused toggleLike
     useGallery();
   
   // Ensure we always fetch only the current user's images when GalleryPage mounts
@@ -71,21 +68,22 @@ export default function GalleryPage() {
   }, [filteredItems]);
   
 
-  const count = useMemo(() => {
-    const itemCount = state.searchQuery
-      ? filteredItems.length
-      : state.items.length;
-
-    const totalCount = state.items.length;
-
-    if (state.searchQuery) {
-      return `${itemCount} of ${totalCount} Image${
-        itemCount !== 1 ? "s" : ""
-      } Found`;
-    }
-
-    return `${totalCount} Image${totalCount !== 1 ? "s" : ""} Uploaded`;
-  }, [state.items.length, filteredItems.length, state.searchQuery]);
+  // Removed unused count variable
+  // const count = useMemo(() => {
+  //   const itemCount = state.searchQuery
+  //     ? filteredItems.length
+  //     : state.items.length;
+  //
+  //   const totalCount = state.items.length;
+  //
+  //   if (state.searchQuery) {
+  //     return `${itemCount} of ${totalCount} Image${
+  //       itemCount !== 1 ? "s" : ""
+  //     } Found`;
+  //   }
+  //
+  //   return `${totalCount} Image${totalCount !== 1 ? "s" : ""} Uploaded`;
+  // }, [state.items.length, filteredItems.length, state.searchQuery]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.name === "file" && e.target.files?.[0]) {
@@ -141,7 +139,6 @@ export default function GalleryPage() {
                 <h2 className="text-sm sm:text-base"><strong>Comment</strong></h2>
                 <CommentBox 
                   imageId={activePhoto.id} 
-                  commentsCount={activePhoto.comments_count} 
                   onAddComment={addComment} 
                 />
               </div>

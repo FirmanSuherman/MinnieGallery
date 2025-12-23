@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGallery } from "../context/GalleryContext";
 import type { ExtendedGalleryItem } from "../types";
-import Navigation from "../components/Navigation";
 import { Heart, MessageCircle } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabase/supabase";

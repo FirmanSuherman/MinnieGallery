@@ -65,19 +65,14 @@ interface CommentBoxProps {
 
 export function CommentBox({ 
   imageId, 
-  commentsCount, 
   onAddComment 
-}: CommentBoxProps) {
+}: Omit<CommentBoxProps, 'commentsCount'>) {
   const [comment, setComment] = useState('');
-  const [localCommentsCount, setLocalCommentsCount] = useState(commentsCount);
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!comment.trim()) return;
-    
-    // Optimistic update
-    setLocalCommentsCount(prev => prev + 1);
     
     // Call the actual function to add comment to database
     onAddComment(imageId, comment);

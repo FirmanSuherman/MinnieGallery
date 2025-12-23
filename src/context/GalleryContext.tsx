@@ -7,7 +7,6 @@ import {
 } from "react";
 import type {
   GalleryContextType,
-  GalleryItem,
   ExtendedGalleryItem,
   GalleryProviderProps,
   State,
@@ -15,6 +14,8 @@ import type {
 } from "../types";
 import { galleryReducer } from "./galleryReducers";
 import { supabase } from "../supabase/supabase";
+
+// GalleryItem is used in the ExtendedGalleryItem type definition
 
 const GalleryContext = createContext<GalleryContextType | null>(null);
 
@@ -166,6 +167,20 @@ export function GalleryProvider({ children }: GalleryProviderProps) {
       console.log("Missing file or title");
       return;
     }
+    
+    // Additional validation on the file
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    
+    if (!validTypes.includes(inputs.file.type)) {
+      console.error('Invalid file type. Please upload a JPEG, PNG, WebP, or GIF image.');
+      return;
+    }
+    
+    if (inputs.file.size > maxSize) {
+      console.error('File size too large. Please upload an image smaller than 5MB.');
+      return;
+    }
 
     const {
       data: { user },
@@ -212,10 +227,14 @@ export function GalleryProvider({ children }: GalleryProviderProps) {
     }
 
     if (data) {
-      const newItem: GalleryItem = {
+      const newItem: ExtendedGalleryItem = {
         id: data.id,
         image_url: data.image_url,
         title: data.title,
+        likes_count: 0,
+        comments_count: 0,
+        user_liked: false,
+        interactions: [],
       };
 
       // Step 4: Update local state
